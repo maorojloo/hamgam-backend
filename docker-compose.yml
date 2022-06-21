@@ -1,0 +1,13 @@
+version: '3'
+services:
+  postgres-service:
+    image: postgres:latest
+    container_name: postgres-hamgam
+    ports:
+      - 5432:5432/tcp
+    environment:
+      POSTGRES_DB: hamgam_db
+      POSTGRES_PASSWORD: Ham@Gam#@PRO2e
+    volumes:
+      - /var/lib/postgres
+      - ./dbscripts/postgres:/docker-entrypoint-initdb.d
