@@ -1,2 +1,2 @@
 import os 
-LOG_PATH = ''
+LOG_PATH = 'app.log'

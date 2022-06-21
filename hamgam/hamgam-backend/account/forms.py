@@ -1,14 +1,17 @@
 from django import forms
 from django.contrib.auth.models import Group
+from django.contrib.auth import authenticate                                    
+from .models import Account 
+
 from django.contrib.auth.forms import (UsernameField,
 										UserCreationForm as DjangoUserCreationForm,
 										AuthenticationForm,
 										ReadOnlyPasswordHashField)
-from .models import Account 
+    
 import logging
 from loghelper import CommonLogger
-from ..config import 
-logger = CommonLogger(name=__name__, log_file='../../app.log', level=logging.DEBUG)
+from ..config import LOG_PATH
+logger = CommonLogger(name=__name__, log_file=LOG_PATH, level=logging.DEBUG)
 
 
 
@@ -80,11 +83,11 @@ class UserChangeForm(forms.ModelForm):
 class AuthenticationForm(forms.Form):
     email = forms.EmailField()
     password = forms.CharField(
-        strip=False, widget=forms.PasswordInput
-    )
+        strip=False, widget=forms.PasswordInput)
+
     def __init__(self, request=None, *args, **kwargs):
-		self.fields['email'].label = 'آدرس ایمیل شما' 
-		self.fields['phone'].label = 'شماره همراه شما' 
+        self.fields['email'].label = 'آدرس ایمیل شما' 
+        self.fields['phone'].label = 'شماره همراه شما' 
         self.request = request
         self.user = None
         super().__init__(*args, **kwargs)
@@ -121,7 +124,7 @@ class UserCreationForm2(DjangoUserCreationForm):
             "Sending signup email for email=%s",
             self.cleaned_data["email"],
         )
-        message = f"{self.cleaned_data["email"]} به به "
+        message = f"{self.cleaned_data['email']} به به "
         send_mail(
             "به چوشاب خوش اومدین!",
             message,
