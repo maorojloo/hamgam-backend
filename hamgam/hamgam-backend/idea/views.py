@@ -1,3 +1,74 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_list_or_404, get_object_or_404
+from django.http.response import JsonResponse
+from rest_framework.parsers import JSONParser 
+from rest_framework import status
+from rest_framework.decorators import api_view
+#  Internals 
+from .serializers import IdeaSerializer
+from .models import Idea  
 
-# Create your views here.
+@api_view(['GET', 'POST', "DELETE"])
+def idea_list(request):
+    '''
+    Get list of idea 
+    Post a new Idea 
+    Delete All Ideas
+    '''
+    if request.method == 'GET':
+        ideas = get_list_or_404(Idea)
+        # Use a more khafan way to search 
+        title = request.GET.get('title', None)
+        if title is not None:
+            ideas = ideas.filter(title__icontains=title)
+        
+        ideas_serializer = IdeaSerializer(ideas, many=True)
+        return JsonResponse(ideas_serializer.data, safe=False)
+
+    elif request.method == 'POST':
+            idea_data = JSONParser().parse(request)
+            idea_serializer = IdeaSerializer(data=idea_data)
+            if idea_serializer.is_valid():
+                idea_serializer.save()
+                return JsonResponse(idea_serializer.data, status=status.HTTP_201_CREATED) 
+            return JsonResponse(idea_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+
+
+@api_view(['GET', 'PUT', 'DELETE'])
+def idea_detail(request, pk):
+    # find idea by pk (id)
+    idea = get_object_or_404(Idea, pk = pk)
+    if request.method == 'GET': 
+        try: 
+            #idea = Idea.objects.get(pk=pk)
+             
+            idea_serializer = IdeaSerializer(idea)
+            return JsonResponse(idea_serializer.data) 
+            
+        except Idea.DoesNotExist: 
+            return JsonResponse({'message': 'ایده شما یافت نشد '}, status=status.HTTP_404_NOT_FOUND) 
+ 
+    elif request.method == 'PUT': 
+        idea_data = JSONParser().parse(request) 
+        idea_serializer = IdeaSerializer(idea, data=idea_data) 
+        if idea_serializer.is_valid(): 
+            idea_serializer.save() 
+            return JsonResponse(idea_serializer.data) 
+        return JsonResponse(idea_serializer.errors, status=status.HTTP_400_BAD_REQUEST) 
+
+    elif request.method == 'DELETE': 
+        idea.delete() 
+        return JsonResponse({'message': 'ایده با موفقیت دیلیت شد !'}, status=status.HTTP_204_NO_CONTENT)
+            
+
+
+
+@api_view(['GET'])
+def idea_list_published(request):
+    # GET all published ideas
+    ideas = Idea.objects.filter(published=True)
+        
+    if request.method == 'GET': 
+        ideas_serializer = IdeaSerializer(ideas, many=True)
+        return JsonResponse(ideas_serializer.data, safe=False)
