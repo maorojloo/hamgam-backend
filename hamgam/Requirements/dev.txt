@@ -2,5 +2,5 @@ coverage
 django-debug-toolbar
 selenium
 django 
-djangorestframework 
-git+git@github.com:khoramism/log-helper.git
+djangorestframework
+dotenv
