@@ -4,3 +4,4 @@ selenium
 django 
 djangorestframework
 dotenv
+django-cors-headers

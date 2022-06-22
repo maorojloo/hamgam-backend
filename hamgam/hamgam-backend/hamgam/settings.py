@@ -46,6 +46,9 @@ INSTALLED_APPS = [
     # External 
     "debug_toolbar",
     'rest_framework',
+    # CORS
+    'corsheaders',
+    
     
     # Internal 
     'account.apps.AccountConfig',
@@ -65,9 +68,16 @@ MIDDLEWARE = [
     "debug_toolbar.middleware.DebugToolbarMiddleware",
     # LEAKED PASSWORDS 
     'pwned_passwords_django.middleware.PwnedPasswordsMiddleware',
+    # CORS
+    'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.common.CommonMiddleware',
 ]
+
+
+
 INTERNAL_IPS = [
     "127.0.0.1",
+    
 ]
 
 ROOT_URLCONF = 'hamgam.urls'
@@ -161,6 +171,14 @@ EMAIL_USE_TLS = True
 
 
 STATIC_URL = '/static/'
+
+
+ # Cors 
+
+CORS_ORIGIN_ALLOW_ALL = False
+CORS_ORIGIN_WHITELIST = (
+    'http://localhost:8081',
+)
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
