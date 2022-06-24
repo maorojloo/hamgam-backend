@@ -53,6 +53,7 @@ INSTALLED_APPS = [
     # Internal 
     'account.apps.AccountConfig',
     'idea.apps.IdeaConfig',
+    'skill.apps.SkillConfig',
 ]
 
 MIDDLEWARE = [
