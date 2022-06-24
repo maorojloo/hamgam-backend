@@ -3,5 +3,5 @@ django-debug-toolbar
 selenium
 django 
 djangorestframework
-dotenv
+python-dotenv
 django-cors-headers

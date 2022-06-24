@@ -18,8 +18,8 @@ from dotenv import load_dotenv
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-env_path = BASE_DIR + '/.env'
-load_dotenv(env_path)
+#env_path = Path(BASE_DIR + '/.env'
+#load_dotenv(env_path)
 
 
 # Quick-start development settings - unsuitable for production
@@ -130,9 +130,9 @@ AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     }, 
-    {
-        'NAME': 'account.validators.ContextValidator'
-    },
+    #{
+    #    'NAME': 'account.validators.ContextValidator'
+    #},
     {
         'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator'
     },
@@ -193,7 +193,7 @@ AUTH_USER_MODEL = 'account.Account'
 
 
 # Logging 
-
+'''
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
@@ -213,7 +213,7 @@ LOGGING = {
         },
     },
 }
-
+'''
 ## Coolkie Sessions 
 
 
@@ -223,9 +223,9 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.SessionAuthentication', 
 
     ), 
-    'DEFAULT_PERMISSION_CLASSES' : (
-        'rest_framework.permissons.IsAuthenticatedOrReadOnly',
-    ),
+    #'DEFAULT_PERMISSION_CLASSES' : (
+    #    'rest_framework.permissons.IsAuthenticatedOrReadOnly',
+    #),
 }
 
 
@@ -251,11 +251,11 @@ CACHES = {
         'BACKEND': 'django.core.cache.backends.redis.RedisCache',
         'LOCATION': 'redis://{REDIS_USERNAME}:{REDIS_PASSWORD}@127.0.0.1:6379',
     },
-    'OPTIONS': {
-    'db': '0',
-    'parser_class': 'redis.connection.PythonParser',
-    'pool_class': 'redis.BlockingConnectionPool', 
-    }
+    #'OPTIONS': {
+    #'db': '0',
+    #'parser_class': 'redis.connection.PythonParser',
+    #'pool_class': 'redis.BlockingConnectionPool', 
+    #}
 }
 
 #### NOT ADDING NOW 
