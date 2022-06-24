@@ -9,7 +9,7 @@ from config.shared import TimeStampedModel, Postable
 
 from .category import Category
 from .sub_category import SubCategory
-
+from skill.models import Skill
 
 class Idea(models.Model):
     
@@ -33,6 +33,8 @@ class Idea(models.Model):
     sub_cat = models.ManyToManyField(SubCategory)
     
     likes = models.ManyToManyField(Account)
+
+    skills = models.ManyToManyField(Skill, related_name='idea_skills')
 
     @admin.display(
         boolean=True,
