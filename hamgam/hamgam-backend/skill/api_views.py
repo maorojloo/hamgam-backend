@@ -9,8 +9,3 @@ class SkillViewCreate(viewsets.ModelViewSet):
     queryset = Skill.objects.all()
     serializer_class = SkillSerializer
 
-
-
-class EmployeeDeleteApi(generics.DestroyAPIView):
-    queryset = Employee.objects.all()
-    serializer_class = EmployeeSerializer
