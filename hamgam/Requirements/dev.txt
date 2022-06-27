@@ -10,3 +10,4 @@ djangorestframework_simplejwt
 django-rest-authemail
 django-extensions
 Pillow
+autopep8
