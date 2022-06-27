@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'authemail',
     # CORS
     'corsheaders',
+    'django_extensions',
     
     
     # Internal 
