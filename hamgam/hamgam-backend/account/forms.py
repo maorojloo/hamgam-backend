@@ -9,11 +9,9 @@ from django.contrib.auth.forms import (UsernameField,
 										ReadOnlyPasswordHashField)
     
 import logging
-from loghelper import CommonLogger
-from config import LOG_PATH
-
-
-logger = CommonLogger(name=__name__, log_file=LOG_PATH, level=logging.DEBUG)
+#from loghelper import CommonLogger
+#from ..config import LOG_PATH
+#logger = CommonLogger(name=__name__, log_file=LOG_PATH, level=logging.DEBUG)
 
 
 

@@ -4,5 +4,5 @@ selenium
 django 
 djangorestframework
 python-dotenv
-django-cors-headers
 pwned-passwords-django
+django-cors-headers

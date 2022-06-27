@@ -18,8 +18,13 @@ from dotenv import load_dotenv
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+<<<<<<< HEAD
 env_path = Path(BASE_DIR , '/.env')
 load_dotenv(env_path)
+=======
+#env_path = Path(BASE_DIR + '/.env'
+#load_dotenv(env_path)
+>>>>>>> aba57730dd13750a4f124a220945fc9815a9b94f
 
 
 # Quick-start development settings - unsuitable for production
@@ -53,6 +58,7 @@ INSTALLED_APPS = [
     # Internal 
     'account.apps.AccountConfig',
     'idea.apps.IdeaConfig',
+    'skill.apps.SkillConfig',
 ]
 
 MIDDLEWARE = [
@@ -130,7 +136,13 @@ AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     }, 
+<<<<<<< HEAD
 
+=======
+    #{
+    #    'NAME': 'account.validators.ContextValidator'
+    #},
+>>>>>>> aba57730dd13750a4f124a220945fc9815a9b94f
     {
         'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator'
     },
@@ -191,7 +203,7 @@ AUTH_USER_MODEL = 'account.Account'
 
 
 # Logging 
-
+'''
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
@@ -211,7 +223,7 @@ LOGGING = {
         },
     },
 }
-
+'''
 ## Coolkie Sessions 
 
 
@@ -219,8 +231,16 @@ LOGGING = {
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES' : (
         'rest_framework.authentication.SessionAuthentication', 
+<<<<<<< HEAD
         #'rest_framework.permissons.IsAuthenticatedOrReadOnly',
         ),
+=======
+
+    ), 
+    #'DEFAULT_PERMISSION_CLASSES' : (
+    #    'rest_framework.permissons.IsAuthenticatedOrReadOnly',
+    #),
+>>>>>>> aba57730dd13750a4f124a220945fc9815a9b94f
 }
 
 
@@ -252,7 +272,15 @@ CACHES = {
         'pool_class': 'redis.BlockingConnectionPool', 
         }
     },
+<<<<<<< HEAD
 
+=======
+    #'OPTIONS': {
+    #'db': '0',
+    #'parser_class': 'redis.connection.PythonParser',
+    #'pool_class': 'redis.BlockingConnectionPool', 
+    #}
+>>>>>>> aba57730dd13750a4f124a220945fc9815a9b94f
 }
 
 #### NOT ADDING NOW 
