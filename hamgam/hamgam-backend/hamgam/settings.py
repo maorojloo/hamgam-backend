@@ -15,16 +15,9 @@ import os
 import socket
 
 from dotenv import load_dotenv
-
+BASE_URL = 'https://hamgam-srbiau.ir'
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-<<<<<<< HEAD
-env_path = Path(BASE_DIR , '/.env')
-load_dotenv(env_path)
-=======
-#env_path = Path(BASE_DIR + '/.env'
-#load_dotenv(env_path)
->>>>>>> aba57730dd13750a4f124a220945fc9815a9b94f
 
 
 # Quick-start development settings - unsuitable for production
@@ -51,6 +44,8 @@ INSTALLED_APPS = [
     # External 
     "debug_toolbar",
     'rest_framework',
+    'rest_framework.authtoken',
+    'authemail',
     # CORS
     'corsheaders',
     
@@ -136,16 +131,6 @@ AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     }, 
-<<<<<<< HEAD
-
-=======
-    #{
-    #    'NAME': 'account.validators.ContextValidator'
-    #},
->>>>>>> aba57730dd13750a4f124a220945fc9815a9b94f
-    {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator'
-    },
     {
         'NAME':'pwned_passwords_django.validators.PwnedPasswordsValidator',
         'OPTIONS': {'error_message': ('این رمز عبور قبلا هک شده بوده. برای اطلاعات بیشتر /n https://haveibeenpwned.com/ /n  یک سری بزنید')}
@@ -179,7 +164,15 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 
+EMAIL_FROM = os.environ.get('AUTHEMAIL_DEFAULT_EMAIL_FROM') or '<YOUR DEFAULT_EMAIL_FROM HERE>'
+EMAIL_BCC = os.environ.get('AUTHEMAIL_DEFAULT_EMAIL_BCC') or '<YOUR DEFAULT_EMAIL_BCC HERE>'
 
+EMAIL_HOST = os.environ.get('AUTHEMAIL_EMAIL_HOST') or 'smtp.gmail.com'
+EMAIL_PORT = os.environ.get('AUTHEMAIL_EMAIL_PORT') or 587
+EMAIL_HOST_USER = os.environ.get('AUTHEMAIL_EMAIL_HOST_USER') or '<YOUR EMAIL_HOST_USER HERE>'
+EMAIL_HOST_PASSWORD = os.environ.get('AUTHEMAIL_EMAIL_HOST_PASSWORD') or '<YOUR EMAIL_HOST_PASSWORD HERE>'
+EMAIL_USE_TLS = True
+EMAIL_USE_SSL = False
 STATIC_URL = '/static/'
 
 
@@ -227,23 +220,12 @@ LOGGING = {
 ## Coolkie Sessions 
 
 
-# Rest FrameWork 
+
 REST_FRAMEWORK = {
-    'DEFAULT_AUTHENTICATION_CLASSES' : (
-        'rest_framework.authentication.SessionAuthentication', 
-<<<<<<< HEAD
-        #'rest_framework.permissons.IsAuthenticatedOrReadOnly',
-        ),
-=======
-
-    ), 
-    #'DEFAULT_PERMISSION_CLASSES' : (
-    #    'rest_framework.permissons.IsAuthenticatedOrReadOnly',
-    #),
->>>>>>> aba57730dd13750a4f124a220945fc9815a9b94f
+	'DEFAULT_AUTHENTICATION_CLASSES': (
+		'rest_framework.authentication.TokenAuthentication',
+	)
 }
-
-
 # Email 
 
 EMAIL_BACKEND = "django.core.mail.backends.filebased.EmailBackend"
@@ -272,15 +254,6 @@ CACHES = {
         'pool_class': 'redis.BlockingConnectionPool', 
         }
     },
-<<<<<<< HEAD
-
-=======
-    #'OPTIONS': {
-    #'db': '0',
-    #'parser_class': 'redis.connection.PythonParser',
-    #'pool_class': 'redis.BlockingConnectionPool', 
-    #}
->>>>>>> aba57730dd13750a4f124a220945fc9815a9b94f
 }
 
 #### NOT ADDING NOW 
