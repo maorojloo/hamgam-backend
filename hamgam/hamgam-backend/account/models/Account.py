@@ -17,13 +17,14 @@ class Account(AbstractBaseUser, PermissionsMixin):
 	is_active = models.BooleanField(default=True)
 	date_joined = models.DateTimeField(default=timezone.now)
 	last_login = models.DateTimeField(null=True)
-	# Do apply this with IP as well 
-	address = models.CharField(max_length=250)
 	first_name = models.CharField(max_length=50)
 	last_name = models.CharField(max_length=50)
-	postal_code = models.CharField(max_length=20)
-	city = models.CharField(max_length=100)
-	
+
+	# Do apply this with IP as well 
+	# GEO LOCATION DATA
+	#postal_code = models.CharField(max_length=20)
+	#city = models.CharField(max_length=100)
+	#address = models.CharField(max_length=250)
 	objects = AccountManager()
 	# USERNAME_FIELD is the name of the field on the user model that is used as the unique identifier.
 	USERNAME_FIELD = 'email'
@@ -39,9 +40,4 @@ class Account(AbstractBaseUser, PermissionsMixin):
 		return f'@{self.username}'
 
 	def get_short_name(self):
-		return self.username
-
-	def get_absolute_url(self):
-		return reverse("account:profile_detail", kwargs={"pk": self.pk})	
-	#class Meta:
-	#	abstract = True 
+		return self.first_name

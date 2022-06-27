@@ -50,7 +50,7 @@ class Idea(models.Model):
 
     content = models.TextField()
 
-    creator = models.ForeignKey("account.UserProfile", on_delete=models.CASCADE, related_name='idea_creator')
+    creator = models.ForeignKey("account.Account", on_delete=models.CASCADE, related_name='idea_creator')
     
     pub_date = pub_date = models.DateTimeField('published date')
     

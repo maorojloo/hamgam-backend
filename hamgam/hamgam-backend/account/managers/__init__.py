@@ -1,3 +1,3 @@
-from .account import AccountManager
+from .accountmanager import AccountManager
 
 

@@ -7,3 +7,5 @@ class IdeaSerializer(serializers.ModelSerializer):
     class Meta:
         models = Idea
         fields = '__all__'
+
+

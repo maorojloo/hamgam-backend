@@ -18,7 +18,7 @@ from dotenv import load_dotenv
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-env_path = BASE_DIR + '/.env'
+env_path = Path(BASE_DIR , '/.env')
 load_dotenv(env_path)
 
 
@@ -63,7 +63,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    # Externals
+
     # Debug toolbar  
     "debug_toolbar.middleware.DebugToolbarMiddleware",
     # LEAKED PASSWORDS 
@@ -130,9 +130,7 @@ AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     }, 
-    {
-        'NAME': 'account.validators.ContextValidator'
-    },
+
     {
         'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator'
     },
@@ -201,7 +199,7 @@ LOGGING = {
         'file': {
             'level': 'DEBUG',
             'class': 'logging.FileHandler',
-            'filename': f'{BASE_DIR}/../../logs/debug.log',
+            'filename': f'{BASE_DIR}/../../hamgam/logs/debug.log',
         }
 
     },
@@ -221,11 +219,8 @@ LOGGING = {
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES' : (
         'rest_framework.authentication.SessionAuthentication', 
-
-    ), 
-    'DEFAULT_PERMISSION_CLASSES' : (
-        'rest_framework.permissons.IsAuthenticatedOrReadOnly',
-    ),
+        #'rest_framework.permissons.IsAuthenticatedOrReadOnly',
+        ),
 }
 
 
@@ -249,13 +244,15 @@ PROTECTED_MEDIA =  f"{BASE_DIR}/cdn_test/protected"
 CACHES = {
     'default': {
         'BACKEND': 'django.core.cache.backends.redis.RedisCache',
-        'LOCATION': 'redis://{REDIS_USERNAME}:{REDIS_PASSWORD}@127.0.0.1:6379',
+        #'LOCATION': 'redis://{REDIS_USERNAME}:{REDIS_PASSWORD}@127.0.0.1:6379',
+        'LOCATION': 'redis://127.0.0.1:6379',
+        'OPTIONS': {
+        'db': '0',
+        'parser_class': 'redis.connection.PythonParser',
+        'pool_class': 'redis.BlockingConnectionPool', 
+        }
     },
-    'OPTIONS': {
-    'db': '0',
-    'parser_class': 'redis.connection.PythonParser',
-    'pool_class': 'redis.BlockingConnectionPool', 
-    }
+
 }
 
 #### NOT ADDING NOW 

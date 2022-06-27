@@ -1,7 +1,7 @@
 from django.shortcuts import render, get_list_or_404, get_object_or_404
 from django.http.response import JsonResponse
 from rest_framework.parsers import JSONParser 
-from rest_framework import status
+from rest_framework import status, serializers
 from rest_framework.decorators import api_view
 #  Internals 
 from .serializers import IdeaSerializer
@@ -25,6 +25,9 @@ def idea_list(request):
         return JsonResponse(ideas_serializer.data, safe=False)
 
     elif request.method == 'POST':
+         # validating for already existing data
+        if Idea.objects.filter(**request.data).exists():
+            raise serializers.ValidationError('This data already exists')
             idea_data = JSONParser().parse(request)
             idea_serializer = IdeaSerializer(data=idea_data)
             if idea_serializer.is_valid():
