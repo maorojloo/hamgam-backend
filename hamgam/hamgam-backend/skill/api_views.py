@@ -5,7 +5,7 @@ from rest_framework import generics
 from rest_framework.response import Response
 
 
-class SkillViewCreate(viewsets.ModelViewSet):
+class SkillViewSet(viewsets.ModelViewSet):
     queryset = Skill.objects.all()
     serializer_class = SkillSerializer
 

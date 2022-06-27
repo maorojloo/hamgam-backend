@@ -44,7 +44,7 @@ def idea_detail(request, pk):
     idea = get_object_or_404(Idea, pk = pk)
     if request.method == 'GET': 
         try: 
-            #idea = Idea.objects.get(pk=pk)
+            idea = Idea.objects.get(pk=pk)
              
             idea_serializer = IdeaSerializer(idea)
             return JsonResponse(idea_serializer.data) 

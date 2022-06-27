@@ -3,9 +3,8 @@ from rest_framework import serializers
 from .models import Idea , Comment, Category, SubCategory
 
 class IdeaSerializer(serializers.ModelSerializer):
-
     class Meta:
-        models = Idea
+        model = Idea
         fields = '__all__'
 
 
