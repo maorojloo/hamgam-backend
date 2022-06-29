@@ -7,3 +7,7 @@ python-dotenv
 pwned-passwords-django
 django-cors-headers
 djangorestframework_simplejwt
+django-rest-authemail
+django-extensions
+Pillow
+autopep8
