@@ -55,6 +55,8 @@ INSTALLED_APPS = [
     'account.apps.AccountConfig',
     'idea.apps.IdeaConfig',
     'skill.apps.SkillConfig',
+    'appeal',
+    
 ]
 
 MIDDLEWARE = [
