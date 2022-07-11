@@ -7,3 +7,4 @@ python-dotenv
 pwned-passwords-django
 django-cors-headers
 djangorestframework_simplejwt
+psycopg2
