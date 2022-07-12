@@ -11,4 +11,3 @@ class AppealSerializer(serializers.ModelSerializer):
         if len(value) < 3:
             raise serializers.ValidationError(F"{value} is too short")
         return value
-

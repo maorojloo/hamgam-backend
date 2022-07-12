@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
 from pathlib import Path
-import os 
+import os
 import socket
 
 from dotenv import load_dotenv
@@ -41,22 +41,24 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    # External 
+
+    # External
     "debug_toolbar",
     'rest_framework',
     'rest_framework.authtoken',
     'authemail',
+
     # CORS
     'corsheaders',
     'django_extensions',
-    
-    
-    # Internal 
+
+
+    # Internal
     'account.apps.AccountConfig',
     'idea.apps.IdeaConfig',
     'skill.apps.SkillConfig',
     'appeal',
-    
+
 ]
 
 MIDDLEWARE = [
@@ -68,9 +70,9 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 
-    # Debug toolbar  
+    # Debug toolbar
     "debug_toolbar.middleware.DebugToolbarMiddleware",
-    # LEAKED PASSWORDS 
+    # LEAKED PASSWORDS
     'pwned_passwords_django.middleware.PwnedPasswordsMiddleware',
     # CORS
     'corsheaders.middleware.CorsMiddleware',
@@ -78,10 +80,9 @@ MIDDLEWARE = [
 ]
 
 
-
 INTERNAL_IPS = [
     "127.0.0.1",
-    
+
 ]
 
 ROOT_URLCONF = 'hamgam.urls'
@@ -106,7 +107,8 @@ WSGI_APPLICATION = 'hamgam.wsgi.application'
 
 if DEBUG:
     hostname, _, ips = socket.gethostbyname_ex(socket.gethostname())
-    INTERNAL_IPS = [ip[: ip.rfind(".")] + ".1" for ip in ips] + ["127.0.0.1", "10.0.2.2"]
+    INTERNAL_IPS = [
+        ip[: ip.rfind(".")] + ".1" for ip in ips] + ["127.0.0.1", "10.0.2.2"]
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
@@ -133,9 +135,9 @@ AUTH_PASSWORD_VALIDATORS = [
     },
     {
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
-    }, 
+    },
     {
-        'NAME':'pwned_passwords_django.validators.PwnedPasswordsValidator',
+        'NAME': 'pwned_passwords_django.validators.PwnedPasswordsValidator',
         'OPTIONS': {'error_message': ('این رمز عبور قبلا هک شده بوده. برای اطلاعات بیشتر /n https://haveibeenpwned.com/ /n  یک سری بزنید')}
     }
 ]
@@ -159,27 +161,30 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
 
-# URL 
+# URL
 ALLOW_UNICODE_SLUGS = True
 
-#### EMIAL STUFF
+# EMIAL STUFF
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 
-EMAIL_FROM = os.environ.get('AUTHEMAIL_DEFAULT_EMAIL_FROM') or '<YOUR DEFAULT_EMAIL_FROM HERE>'
-EMAIL_BCC = os.environ.get('AUTHEMAIL_DEFAULT_EMAIL_BCC') or '<YOUR DEFAULT_EMAIL_BCC HERE>'
+EMAIL_FROM = os.environ.get(
+    'AUTHEMAIL_DEFAULT_EMAIL_FROM') or '<YOUR DEFAULT_EMAIL_FROM HERE>'
+EMAIL_BCC = os.environ.get(
+    'AUTHEMAIL_DEFAULT_EMAIL_BCC') or '<YOUR DEFAULT_EMAIL_BCC HERE>'
 
 EMAIL_HOST = os.environ.get('AUTHEMAIL_EMAIL_HOST') or 'smtp.gmail.com'
 EMAIL_PORT = os.environ.get('AUTHEMAIL_EMAIL_PORT') or 587
-EMAIL_HOST_USER = os.environ.get('AUTHEMAIL_EMAIL_HOST_USER') or '<YOUR EMAIL_HOST_USER HERE>'
-EMAIL_HOST_PASSWORD = os.environ.get('AUTHEMAIL_EMAIL_HOST_PASSWORD') or '<YOUR EMAIL_HOST_PASSWORD HERE>'
+EMAIL_HOST_USER = os.environ.get(
+    'AUTHEMAIL_EMAIL_HOST_USER') or '<YOUR EMAIL_HOST_USER HERE>'
+EMAIL_HOST_PASSWORD = os.environ.get(
+    'AUTHEMAIL_EMAIL_HOST_PASSWORD') or '<YOUR EMAIL_HOST_PASSWORD HERE>'
 EMAIL_USE_TLS = True
 EMAIL_USE_SSL = False
 STATIC_URL = '/static/'
 
-
- # Cors 
+# Cors
 
 CORS_ORIGIN_ALLOW_ALL = False
 CORS_ORIGIN_WHITELIST = (
@@ -190,7 +195,6 @@ CORS_ORIGIN_WHITELIST = (
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 
-
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
@@ -198,7 +202,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AUTH_USER_MODEL = 'account.Account'
 
 
-# Logging 
+# Logging
 '''
 LOGGING = {
     'version': 1,
@@ -220,45 +224,43 @@ LOGGING = {
     },
 }
 '''
-## Coolkie Sessions 
-
+# Coolkie Sessions
 
 
 REST_FRAMEWORK = {
-	'DEFAULT_AUTHENTICATION_CLASSES': (
-		'rest_framework.authentication.TokenAuthentication',
-	)
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.TokenAuthentication',
+    )
 }
-# Email 
+# Email
 
 EMAIL_BACKEND = "django.core.mail.backends.filebased.EmailBackend"
 EMAIL_FILE_PATH = os.path.join(BASE_DIR, 'sent_email')
 
 
-
-# Media 
+# Media
 
 MEDIA_URL = "/media/"
 # any file field upload by default
-MEDIA_ROOT =  f"{BASE_DIR}/cdn_test/media"
+MEDIA_ROOT = f"{BASE_DIR}/cdn_test/media"
 
-PROTECTED_MEDIA =  f"{BASE_DIR}/cdn_test/protected"
+PROTECTED_MEDIA = f"{BASE_DIR}/cdn_test/protected"
 
 
-# Caching Using Redis 
+# Caching Using Redis
 CACHES = {
     'default': {
         'BACKEND': 'django.core.cache.backends.redis.RedisCache',
-        #'LOCATION': 'redis://{REDIS_USERNAME}:{REDIS_PASSWORD}@127.0.0.1:6379',
+        # 'LOCATION': 'redis://{REDIS_USERNAME}:{REDIS_PASSWORD}@127.0.0.1:6379',
         'LOCATION': 'redis://127.0.0.1:6379',
         'OPTIONS': {
-        'db': '0',
-        'parser_class': 'redis.connection.PythonParser',
-        'pool_class': 'redis.BlockingConnectionPool', 
+            'db': '0',
+            'parser_class': 'redis.connection.PythonParser',
+            'pool_class': 'redis.BlockingConnectionPool',
         }
     },
 }
 
-#### NOT ADDING NOW 
-## adding uWSGI
+# NOT ADDING NOW
+# adding uWSGI
 # sudo apt-get install uwsgi uwsgi-plugin-python uwsgi-plugin-cgi
