@@ -11,7 +11,7 @@ class Skill(models.Model):
 
     category = models.ForeignKey('idea.Category', on_delete=models.DO_NOTHING,  blank=True)
 
-    sub_category = models.ForeignKey('idea.SubCategory', on_delete=models.DO_NOTHING,  blank=True)
+    #sub_category = models.ForeignKey('idea.SubCategory', on_delete=models.DO_NOTHING,  blank=True)
 
     users = models.ManyToManyField('account.Account',  blank=True, related_name='skill_users')
 

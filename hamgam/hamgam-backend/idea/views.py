@@ -3,9 +3,22 @@ from django.http.response import JsonResponse
 from rest_framework.parsers import JSONParser 
 from rest_framework import status, serializers
 from rest_framework.decorators import api_view
+from rest_framework import generics
 #  Internals 
-from .serializers import IdeaSerializer
+from .serializers import IdeaListSerializer, IdeaDetailSerializer
 from .models import Idea  
+
+
+class ListIdea(generics.ListAPIView):
+    queryset = Idea.objects.filter(status='published')
+    serializer_class = IdeaListSerializer
+
+
+class DetailIdea(generics.RetrieveAPIView):
+    queryset = Idea.objects.filter(status='published')
+    serializer_class = IdeaDetailSerializer
+
+
 
 @api_view(['GET', 'POST', "DELETE"])
 def idea_list(request):
