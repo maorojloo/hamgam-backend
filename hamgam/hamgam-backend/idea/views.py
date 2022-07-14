@@ -1,10 +1,14 @@
 from django.shortcuts import render, get_list_or_404, get_object_or_404
 from django.http.response import JsonResponse
 from rest_framework.parsers import JSONParser 
+from rest_framework import status, filters 
+from rest_framework.decorators import api_view
+from rest_framework.permissions import IsAuthenticatedOrReadOnly
+from rest_framework.views import ModelViewSet
+
 from rest_framework import status, serializers
 from rest_framework.decorators import api_view
 from rest_framework import generics
-#  Internals 
 from .serializers import IdeaListSerializer, IdeaDetailSerializer
 from .models import Idea  
 
@@ -78,6 +82,13 @@ def idea_detail(request, pk):
         return JsonResponse({'message': 'ایده با موفقیت دیلیت شد !'}, status=status.HTTP_204_NO_CONTENT)
             
 
+class IdeaViewSet(ModelViewSet):
+    serializer_class = IdeaListSerializer
+    queryset = Idea.objects.all()
+    #authentication_classes = (TokenAuthentication,)
+    permission_classes = (IsAuthenticatedOrReadOnly)
+    filter_backends = (filters.SearchFilter,)
+    search_fields = ('content', 'title',)
 
 
 @api_view(['GET'])

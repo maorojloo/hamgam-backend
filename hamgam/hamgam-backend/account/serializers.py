@@ -1,7 +1,5 @@
 from rest_framework import serializers
-
-from account.models import account
-from .models import Account
+from .models import Account 
 
 
 class AccountSerializer(serializers.ModelSerializer):
@@ -16,6 +14,17 @@ class AccountSerializer(serializers.ModelSerializer):
                 'style': {'input_type':'password'},
             }
         }
+    def create(self,validated_data):
+        '''Create and return a new user profile'''
+        user = Account.objects.create(
+            email = validated_data['email'],
+            name = validated_data['name'],
+            password = validated_data['password'],
+        )
+        # it will override the creation of user in order to hash the password.
+        return user
+
+
 
 
 class CreaterIdeaSerializer(serializers.ModelSerializer):
@@ -36,4 +45,3 @@ class JustEmailSerializer(serializers.ModelSerializer):
 #    class Meta:
 #        model = Account
 #        fields = ('likes')
-        
