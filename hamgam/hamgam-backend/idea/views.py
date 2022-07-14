@@ -34,7 +34,7 @@ def idea_list(request):
         if title is not None:
             ideas = ideas.filter(title__icontains=title)
         
-        ideas_serializer = IdeaSerializer(ideas, many=True)
+        ideas_serializer = IdeaListSerializer(ideas, many=True)
         return JsonResponse(ideas_serializer.data, safe=False)
 
     elif request.method == 'POST':
@@ -59,7 +59,7 @@ def idea_detail(request, pk):
         try: 
             idea = Idea.objects.get(pk=pk)
              
-            idea_serializer = IdeaSerializer(idea)
+            idea_serializer = IdeaDetailSerializer(idea)
             return JsonResponse(idea_serializer.data) 
             
         except Idea.DoesNotExist: 
@@ -67,7 +67,7 @@ def idea_detail(request, pk):
  
     elif request.method == 'PUT': 
         idea_data = JSONParser().parse(request) 
-        idea_serializer = IdeaSerializer(idea, data=idea_data) 
+        idea_serializer = IdeaDetailSerializer(idea, data=idea_data) 
         if idea_serializer.is_valid(): 
             idea_serializer.save() 
             return JsonResponse(idea_serializer.data) 
@@ -86,5 +86,5 @@ def idea_list_published(request):
     ideas = Idea.objects.filter(published=True)
         
     if request.method == 'GET': 
-        ideas_serializer = IdeaSerializer(ideas, many=True)
+        ideas_serializer = IdeaListSerializer(ideas, many=True)
         return JsonResponse(ideas_serializer.data, safe=False)
