@@ -2,12 +2,11 @@ from rest_framework import serializers
 from .models import Account 
 
 
-
-class UserProfileSerializer(serializers.ModelSerializer):
-    '''Serializes a user profile object''' 
+class AccountSerializer(serializers.ModelSerializer):
     class Meta:
-        model = UserProfile
-        fields = ('id','email', 'name', 'password')
+        model = Account
+        #fields = ('id','email', 'name', 'password', 'phone', 'bio', 'avatar', 'is_staff', 'date_joined','last_login','last_login', 'is_active')
+        exclude = ('is_staff', 'date_joined', 'last_login')
         # we need to make password write only in order for nobody to see  
         extra_kwargs = {
             'password': {
@@ -26,4 +25,23 @@ class UserProfileSerializer(serializers.ModelSerializer):
         return user
 
 
+
+
+class CreaterIdeaSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Account
+        #fields = ('id','email', 'name', 'password', 'phone', 'bio', 'avatar', 'is_staff', 'date_joined','last_login','last_login', 'is_active')
+        exclude = ('is_staff', 'date_joined', 'last_login', 'password', 'is_superuser', 'groups', 'user_permissions')
+    
+
+
+class JustEmailSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Account
+        fields = ('id','email', 'avatar')
         
+#
+#class LikeSerializer(serializers.ModelSerializer):
+#    class Meta:
+#        model = Account
+#        fields = ('likes')

@@ -15,18 +15,16 @@ import os
 import socket
 
 from dotenv import load_dotenv
-
+BASE_URL = 'https://hamgam-srbiau.ir'
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-#env_path = Path(BASE_DIR + '/.env'
-#load_dotenv(env_path)
 
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-tm(q&qc&g_sp(=^o*v*g)pat^2cc$0wl+s0yk^(^s7)3#))_i8'
+SECRET_KEY ='lacaa612c*sac56a1212^#&2de2d4w86'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -46,8 +44,11 @@ INSTALLED_APPS = [
     # External 
     "debug_toolbar",
     'rest_framework',
+    'rest_framework.authtoken',
+    'authemail',
     # CORS
     'corsheaders',
+    'django_extensions',
     
     
     # Internal 
@@ -64,7 +65,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    # Externals
+
     # Debug toolbar  
     "debug_toolbar.middleware.DebugToolbarMiddleware",
     # LEAKED PASSWORDS 
@@ -113,7 +114,16 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
-
+#DATABASES = {
+#   'default': {
+#       'ENGINE': 'django.db.backends.postgresql',
+#       'NAME': os.environ.get('POSTGRESQL_DB_NAME'),
+#       'USER': os.environ.get('POSTGRESQL_DB_USER'),
+#       'PASSWORD': os.environ.get('POSTGRESQL_DB_PASSWORD'),
+#       'HOST': os.environ.get('POSTGRESQL_DB_HOST'),
+#       'PORT': os.environ.get('POSTGRESQL_DB_PORT'),
+#   }
+#}
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
@@ -131,12 +141,6 @@ AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     }, 
-    #{
-    #    'NAME': 'account.validators.ContextValidator'
-    #},
-    {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator'
-    },
     {
         'NAME':'pwned_passwords_django.validators.PwnedPasswordsValidator',
         'OPTIONS': {'error_message': ('این رمز عبور قبلا هک شده بوده. برای اطلاعات بیشتر /n https://haveibeenpwned.com/ /n  یک سری بزنید')}
@@ -170,15 +174,23 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 
+EMAIL_FROM = os.environ.get('AUTHEMAIL_DEFAULT_EMAIL_FROM') or '<YOUR DEFAULT_EMAIL_FROM HERE>'
+EMAIL_BCC = os.environ.get('AUTHEMAIL_DEFAULT_EMAIL_BCC') or '<YOUR DEFAULT_EMAIL_BCC HERE>'
 
+EMAIL_HOST = os.environ.get('AUTHEMAIL_EMAIL_HOST') or 'smtp.gmail.com'
+EMAIL_PORT = os.environ.get('AUTHEMAIL_EMAIL_PORT') or 587
+EMAIL_HOST_USER = os.environ.get('AUTHEMAIL_EMAIL_HOST_USER') or '<YOUR EMAIL_HOST_USER HERE>'
+EMAIL_HOST_PASSWORD = os.environ.get('AUTHEMAIL_EMAIL_HOST_PASSWORD') or '<YOUR EMAIL_HOST_PASSWORD HERE>'
+EMAIL_USE_TLS = True
+EMAIL_USE_SSL = False
 STATIC_URL = '/static/'
 
 
  # Cors 
 
-CORS_ORIGIN_ALLOW_ALL = False
+CORS_ORIGIN_ALLOW_ALL = True
 CORS_ORIGIN_WHITELIST = (
-    'http://localhost:8081',
+    'http://0.0.0.0:8081',
 )
 
 # Default primary key field type
@@ -202,7 +214,7 @@ LOGGING = {
         'file': {
             'level': 'DEBUG',
             'class': 'logging.FileHandler',
-            'filename': f'{BASE_DIR}/../../logs/debug.log',
+            'filename': f'{BASE_DIR}/../../hamgam/logs/debug.log',
         }
 
     },
@@ -218,18 +230,12 @@ LOGGING = {
 ## Coolkie Sessions 
 
 
-# Rest FrameWork 
+
 REST_FRAMEWORK = {
-    'DEFAULT_AUTHENTICATION_CLASSES' : (
-        'rest_framework.authentication.SessionAuthentication', 
-
-    ), 
-    #'DEFAULT_PERMISSION_CLASSES' : (
-    #    'rest_framework.permissons.IsAuthenticatedOrReadOnly',
-    #),
+	'DEFAULT_AUTHENTICATION_CLASSES': (
+		'rest_framework.authentication.TokenAuthentication',
+	)
 }
-
-
 # Email 
 
 EMAIL_BACKEND = "django.core.mail.backends.filebased.EmailBackend"
@@ -247,18 +253,15 @@ PROTECTED_MEDIA =  f"{BASE_DIR}/cdn_test/protected"
 
 
 # Caching Using Redis 
-CACHES = {
-    'default': {
-        'BACKEND': 'django.core.cache.backends.redis.RedisCache',
-        'LOCATION': 'redis://{REDIS_USERNAME}:{REDIS_PASSWORD}@127.0.0.1:6379',
-    },
-    #'OPTIONS': {
-    #'db': '0',
-    #'parser_class': 'redis.connection.PythonParser',
-    #'pool_class': 'redis.BlockingConnectionPool', 
-    #}
-}
-
-#### NOT ADDING NOW 
-## adding uWSGI
-# sudo apt-get install uwsgi uwsgi-plugin-python uwsgi-plugin-cgi
+#CACHES = {
+#    'default': {
+#        'BACKEND': 'django.core.cache.backends.redis.RedisCache',
+#        #'LOCATION': 'redis://{REDIS_USERNAME}:{REDIS_PASSWORD}@127.0.0.1:6379',
+#        'LOCATION': 'redis://127.0.0.1:6379',
+#        'OPTIONS': {
+#        'db': '0',
+#        'parser_class': 'redis.connection.PythonParser',
+#        'pool_class': 'redis.BlockingConnectionPool', 
+#        }
+#    },
+#}

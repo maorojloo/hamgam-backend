@@ -4,4 +4,11 @@ selenium
 django 
 djangorestframework
 python-dotenv
+pwned-passwords-django
 django-cors-headers
+djangorestframework_simplejwt
+psycopg2-binary
+django-rest-authemail
+django-extensions
+Pillow
+autopep8

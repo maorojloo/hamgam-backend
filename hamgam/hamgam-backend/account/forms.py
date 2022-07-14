@@ -38,15 +38,18 @@ class UserCreationForm(forms.ModelForm):
 
 	class Meta: 
 		model = Account
-		fields =  ('email', 'username', 'phone', 'avatar')
+		fields =  ('email', 'username', 'phone', 'avatar', 'password1', 'password2')
 
 	def __init__(self, *args,**kwargs):
 		super().__init__(*args,**kwargs)
 		self.fields['email'].label = 'آدرس ایمیل شما' 
 		self.fields['phone'].label = 'شماره همراه شما' 
 		self.fields['username'].label = 'نام کاربری شما' 
-		self.fields['picture'].label = 'آواتار شما' 
-	
+		self.fields['avatar'].label = 'آواتار شما' 
+		self.fields['password1'].label = 'پسورد شما'
+		self.fields['password2'].label = 'تکرار پسورد شما'
+
+
 	def clean_password2(self):
 		# Check that the Two password entries Match!?
 		password1 = self.cleaned_data.get("password1"), 

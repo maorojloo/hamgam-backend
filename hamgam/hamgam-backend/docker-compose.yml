@@ -1,13 +1,24 @@
-version: '3'
+version: "3.9"
 services:
-  postgres-service:
-    image: postgres:latest
-    container_name: postgres-hamgam
-    ports:
-      - 5432:5432/tcp
-    environment:
-      POSTGRES_DB: hamgam_db
-      POSTGRES_PASSWORD: Ham@Gam#@PRO2e
+  web:
+    build: .
+    command: python /code/manage.py runserver 0.0.0.0:8000
     volumes:
-      - /var/lib/postgres
-      - ./dbscripts/postgres:/docker-entrypoint-initdb.d
+    - .:/code
+    ports:
+    - 8000:8000
+    depends_on:
+    - db
+  db:
+    image: postgres:13
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    environment:
+      - POSTGRESQL_DB_NAME = haamgaam
+      - POSTGRESQL_DB_USER = root
+      - POSTGRESQL_DB_PASSWORD = lacaa612c*sac56a1212^#&2de2d4w86
+      - POSTGRESQL_DB_HOST = localhost
+      - POSTGRESQL_DB_PORT = 5432
+
+volumes:
+  postgres_data:
