@@ -1,5 +1,5 @@
 # hamgam-backend
-This is the Backend for the HamGam Project  
+This is the Backend for the HamGam Project   
 
 #### this is how you start the project 
 ####  first make a virtualenv 
